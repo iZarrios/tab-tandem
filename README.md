@@ -1,4 +1,4 @@
-# Tab Swapper
+# TabTandem
 
 A Manifest V3 Chrome extension that toggles between your two most recently
 visited tabs in the **current window** using a keyboard shortcut.
@@ -45,7 +45,7 @@ handled gracefully.
 ## Remap the fallback command
 
 The native `Ctrl+.` command can be rebound at `chrome://extensions/shortcuts`
-(click the puzzle icon → gear, or navigate directly): find **Tab Swapper** →
+(click the puzzle icon → gear, or navigate directly): find **TabTandem** →
 **Swap to the previously active tab in the current window** and click the input.
 
 ## How it works

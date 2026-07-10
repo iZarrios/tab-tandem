@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Tab Swapper",
+  "name": "TabTandem",
   "version": "1.0.0",
   "description": "Swap between the two last active tabs in the current window using a keyboard shortcut.",
   "permissions": ["tabs", "storage"],
@@ -18,7 +18,7 @@
       "48": "icons/icon-48.png",
       "128": "icons/icon-128.png"
     },
-    "default_title": "Tab Swapper"
+    "default_title": "TabTandem"
   },
   "background": {
     "service_worker": "dist/background.js",
