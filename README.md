@@ -23,17 +23,22 @@ handled gracefully.
 
 | Platform | Key                                |
 | -------- | ---------------------------------- |
-| macOS    | <kbd>Command</kbd> + <kbd>`</kbd>  |
+| macOS    | <kbd>Command</kbd> + <kbd>.</kbd>  |
 | Others   | <kbd>Ctrl</kbd> + <kbd>.</kbd>     |
+
+> Note: Chrome's `commands` API does **not** support the backtick (`` ` ``) or
+> `Escape` keys as shortcuts (only letters, digits, `Comma`, `Period`, `Space`,
+> arrows, `Insert`, `Delete`, and media keys). `Ctrl` is automatically mapped to
+> `Command` on macOS, so a single `Ctrl+Period` default works on every platform.
 
 ## Remap the shortcut
 
 Chrome lets you rebind command shortcuts at `chrome://extensions/shortcuts`
-(click the puzzle icon → gear, or navigate directly). Common alternatives people
-use:
+(click the puzzle icon → gear, or navigate directly). Common alternatives that
+the API supports:
 
-- <kbd>Ctrl</kbd> + <kbd>`</kbd> (Ctrl + Backtick)
-- <kbd>Ctrl</kbd> + <kbd>Escape</kbd>
+- <kbd>Ctrl</kbd> + <kbd>,</kbd> (Ctrl + Comma)
+- <kbd>Ctrl</kbd> + <kbd>Space</kbd>
 
 Simply find **Tab Swapper** → **Swap to the previously active tab in the current
 window** and click the input to set a new binding.
