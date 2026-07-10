@@ -21,27 +21,32 @@ handled gracefully.
 
 ## Default shortcut
 
-| Platform | Key                                |
-| -------- | ---------------------------------- |
-| macOS    | <kbd>Command</kbd> + <kbd>.</kbd>  |
-| Others   | <kbd>Ctrl</kbd> + <kbd>.</kbd>     |
+| Binding                       | How it works                                              |
+| ----------------------------- | -------------------------------------------------------- |
+| <kbd>Ctrl</kbd> + <kbd>`</kbd> (Backquote) | Injected content script captures the key globally |
+| <kbd>Ctrl</kbd> + <kbd>Escape</kbd>        | Injected content script captures the key globally |
+| <kbd>Ctrl</kbd> + <kbd>.</kbd>  (fallback) | Native manifest command (`commands` API)         |
 
-> Note: Chrome's `commands` API does **not** support the backtick (`` ` ``) or
-> `Escape` keys as shortcuts (only letters, digits, `Comma`, `Period`, `Space`,
-> arrows, `Insert`, `Delete`, and media keys). `Ctrl` is automatically mapped to
-> `Command` on macOS, so a single `Ctrl+Period` default works on every platform.
+> Chrome's `commands` API does **not** support the backtick (`` ` ``) or
+> `Escape` keys (only letters, digits, `Comma`, `Period`, `Space`, arrows,
+> `Insert`, `Delete`, and media keys). To honor those exact keys, a content
+> script injected into every page listens for `Ctrl`/`Cmd` + Backquote or Escape
+> and messages the background worker to perform the swap. The native
+> `Ctrl+.` command remains as a fallback and is remappable.
 
-## Remap the shortcut
+## Limitations
 
-Chrome lets you rebind command shortcuts at `chrome://extensions/shortcuts`
-(click the puzzle icon → gear, or navigate directly). Common alternatives that
-the API supports:
+- The content-script hotkey only fires while a normal web page has focus. It
+  cannot trigger from `chrome://` pages (including the New Tab page) or when no
+  tab is focused, because content scripts are not injected there.
+- It requires host permission for `<all_urls>` so the script can run on every
+  page.
 
-- <kbd>Ctrl</kbd> + <kbd>,</kbd> (Ctrl + Comma)
-- <kbd>Ctrl</kbd> + <kbd>Space</kbd>
+## Remap the fallback command
 
-Simply find **Tab Swapper** → **Swap to the previously active tab in the current
-window** and click the input to set a new binding.
+The native `Ctrl+.` command can be rebound at `chrome://extensions/shortcuts`
+(click the puzzle icon → gear, or navigate directly): find **Tab Swapper** →
+**Swap to the previously active tab in the current window** and click the input.
 
 ## How it works
 

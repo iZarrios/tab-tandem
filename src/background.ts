@@ -49,6 +49,40 @@ async function clearHistory(windowId: number): Promise<void> {
   }
 }
 
+async function swapToPrevious(windowId: number): Promise<void> {
+  const history = await getHistory(windowId);
+  if (history === null || history.previous === null) {
+    return;
+  }
+
+  const target = history.previous;
+
+  try {
+    await chrome.tabs.get(target);
+  } catch {
+    history.previous = null;
+    await setHistory(windowId, history);
+    return;
+  }
+
+  const leaving = history.current;
+  history.current = target;
+  history.previous = leaving;
+  await setHistory(windowId, history);
+
+  swapping = true;
+  try {
+    await chrome.tabs.update(target, { active: true });
+  } catch {
+    swapping = false;
+    return;
+  }
+
+  setTimeout(() => {
+    swapping = false;
+  }, SWAP_GUARD_MS);
+}
+
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
   const { tabId, windowId } = activeInfo;
 
@@ -87,44 +121,22 @@ chrome.commands.onCommand.addListener(async (command) => {
   if (command !== "toggle-last-tab") {
     return;
   }
-
   const window = await chrome.windows.getLastFocused();
   if (window?.id === undefined) {
     return;
   }
-  const windowId = window.id;
+  await swapToPrevious(window.id);
+});
 
-  const history = await getHistory(windowId);
-  if (history === null || history.previous === null) {
+chrome.runtime.onMessage.addListener((message, sender) => {
+  if (message?.type !== "swap-last-tab") {
     return;
   }
-
-  const target = history.previous;
-
-  try {
-    await chrome.tabs.get(target);
-  } catch {
-    history.previous = null;
-    await setHistory(windowId, history);
+  const windowId = sender.tab?.windowId;
+  if (windowId === undefined) {
     return;
   }
-
-  const leaving = history.current;
-  history.current = target;
-  history.previous = leaving;
-  await setHistory(windowId, history);
-
-  swapping = true;
-  try {
-    await chrome.tabs.update(target, { active: true });
-  } catch {
-    swapping = false;
-    return;
-  }
-
-  setTimeout(() => {
-    swapping = false;
-  }, SWAP_GUARD_MS);
+  void swapToPrevious(windowId);
 });
 
 chrome.windows.onRemoved.addListener((windowId) => {
