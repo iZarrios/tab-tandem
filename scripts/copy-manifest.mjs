@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, cpSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -21,6 +21,12 @@ if (Array.isArray(manifest.content_scripts)) {
 }
 
 mkdirSync(resolve(root, "dist"), { recursive: true });
+
+// Copy static assets (icons) into dist/ so it is self-contained.
+cpSync(resolve(root, "icons"), resolve(root, "dist", "icons"), {
+  recursive: true,
+});
+
 writeFileSync(
   resolve(root, "dist", "manifest.json"),
   JSON.stringify(manifest, null, 2) + "\n",
