@@ -12,7 +12,7 @@
     "toggle-last-tab": {
       "suggested_key": {
         "default": "Ctrl+Period",
-        "mac": "Command+Backtick"
+        "mac": "Command+Backquote"
       },
       "description": "Swap to the previously active tab in the current window"
     }
