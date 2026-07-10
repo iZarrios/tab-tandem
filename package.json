@@ -1,0 +1,12 @@
+{
+  "name": "tab-swapper",
+  "version": "1.0.0",
+  "description": "Swap between the two last active tabs in the current window.",
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}
