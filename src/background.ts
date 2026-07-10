@@ -99,17 +99,24 @@ chrome.commands.onCommand.addListener(async (command) => {
     return;
   }
 
+  const target = history.previous;
+
   try {
-    await chrome.tabs.get(history.previous);
+    await chrome.tabs.get(target);
   } catch {
     history.previous = null;
     await setHistory(windowId, history);
     return;
   }
 
+  const leaving = history.current;
+  history.current = target;
+  history.previous = leaving;
+  await setHistory(windowId, history);
+
   swapping = true;
   try {
-    await chrome.tabs.update(history.previous, { active: true });
+    await chrome.tabs.update(target, { active: true });
   } catch {
     swapping = false;
     return;
