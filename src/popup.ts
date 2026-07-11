@@ -92,7 +92,12 @@ document.addEventListener("keydown", async (event) => {
   event.preventDefault();
   event.stopPropagation();
 
-  if (event.key === "Escape") {
+  if (
+    event.key === "Escape" &&
+    !event.ctrlKey &&
+    !event.metaKey &&
+    !event.altKey
+  ) {
     recording = false;
     primaryInput.classList.remove("recording");
     renderShortcut();
