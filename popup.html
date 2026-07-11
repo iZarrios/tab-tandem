@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TabTandem</title>
+    <script src="dist/theme-init.js"></script>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <header class="header">
+        <div class="header-top">
+          <h1>TabTandem</h1>
+          <button
+            id="theme-toggle"
+            type="button"
+            class="theme-toggle"
+            aria-label="Switch to dark mode"
+            title="Switch to dark mode"
+          >
+            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M21 14.5A8.5 8.5 0 0 1 9.5 3a7 7 0 1 0 11.5 11.5Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.75" />
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+        <p>Swap between your two most recent tabs.</p>
+      </header>
+
+      <section class="section">
+        <h2>Page shortcut</h2>
+        <p class="hint">
+          Works on normal web pages. Use <kbd>Ctrl</kbd> or <kbd>⌘</kbd> plus a
+          key.
+        </p>
+        <label class="field">
+          <span class="field-label">Shortcut</span>
+          <button id="primary-shortcut" type="button" class="shortcut-input">
+            Ctrl+`
+          </button>
+        </label>
+      </section>
+
+      <section class="section">
+        <h2>Fallback shortcut</h2>
+        <p class="hint">
+          Works everywhere, including <code>chrome://</code> pages. Remap it in
+          Chrome&apos;s extension shortcuts page.
+        </p>
+        <div class="fallback-row">
+          <span id="fallback-shortcut" class="shortcut-pill">Ctrl+.</span>
+          <button id="open-shortcuts" type="button" class="secondary-button">
+            Change in Chrome…
+          </button>
+        </div>
+      </section>
+
+      <p id="status" class="status" aria-live="polite"></p>
+    </main>
+
+    <script type="module" src="dist/popup.js"></script>
+  </body>
+</html>

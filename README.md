@@ -24,13 +24,15 @@ handled gracefully.
 | Binding                       | How it works                                              |
 | ----------------------------- | -------------------------------------------------------- |
 | <kbd>Ctrl</kbd> + <kbd>`</kbd> (Backquote) | Injected content script captures the key globally |
-| <kbd>Ctrl</kbd> + <kbd>Escape</kbd>        | Injected content script captures the key globally |
 | <kbd>Ctrl</kbd> + <kbd>.</kbd>  (fallback) | Native manifest command (`commands` API)         |
 
-> Chrome's `commands` API does **not** support the backtick (`` ` ``) or
-> `Escape` keys (only letters, digits, `Comma`, `Period`, `Space`, arrows,
-> `Insert`, `Delete`, and media keys). To honor those exact keys, a content
-> script injected into every page listens for `Ctrl`/`Cmd` + Backquote or Escape
+Click the TabTandem toolbar icon to change the page shortcuts or open
+Chrome's extension shortcuts page for the fallback command.
+
+> Chrome's `commands` API does **not** support the backtick (`` ` ``) key
+> (only letters, digits, `Comma`, `Period`, `Space`, arrows,
+> `Insert`, `Delete`, and media keys). To honor that key, a content
+> script injected into every page listens for `Ctrl`/`Cmd` + Backquote
 > and messages the background worker to perform the swap. The native
 > `Ctrl+.` command remains as a fallback and is remappable.
 
@@ -42,11 +44,13 @@ handled gracefully.
 - It requires host permission for `<all_urls>` so the script can run on every
   page.
 
-## Remap the fallback command
+## Remap shortcuts
 
-The native `Ctrl+.` command can be rebound at `chrome://extensions/shortcuts`
-(click the puzzle icon → gear, or navigate directly): find **TabTandem** →
-**Swap to the previously active tab in the current window** and click the input.
+- **Page shortcut** (`Ctrl`/`Cmd` + key): click the TabTandem toolbar icon and
+  press **Shortcut** to record a new binding.
+- **Fallback command** (`Ctrl+.` by default): click **Change in Chrome…** in the
+  popup, or open `chrome://extensions/shortcuts` manually and find
+  **TabTandem** → **Swap to the previously active tab in the current window**.
 
 ## How it works
 

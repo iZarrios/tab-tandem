@@ -4,9 +4,11 @@
   "description": "Swap between the two last active tabs in the current window.",
   "devDependencies": {
     "@types/chrome": "^0.0.268",
+    "esbuild": "^0.25.0",
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "build": "tsc && node scripts/copy-manifest.mjs"
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "typecheck": "tsc --noEmit"
   }
 }
