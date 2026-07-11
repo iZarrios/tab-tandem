@@ -1,7 +1,16 @@
-# TabTandem
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/readme-logo-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="docs/readme-logo-light.png">
+    <img src="docs/readme-logo-light.png" alt="TabTandem logo" width="96">
+  </picture>
+</p>
 
-A Manifest V3 Chrome extension that toggles between your two most recently
-visited tabs in the **current window** using a keyboard shortcut.
+<h1 align="center">TabTandem</h1>
+
+<p align="center">
+  A Chromium-based extension that toggles between the two most recently visited tabs.
+</p>
 
 ## Install (load unpacked)
 
