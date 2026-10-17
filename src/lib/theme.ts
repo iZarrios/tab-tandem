@@ -1,17 +1,17 @@
-export const THEME_STORAGE_KEY = "tabtandem-popup-theme";
+export const THEME_STORAGE_KEY = 'tabtandem-popup-theme';
 
-export type PopupTheme = "light" | "dark";
+export type PopupTheme = 'light' | 'dark';
 
 export function loadTheme(): PopupTheme {
   try {
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
-    if (stored === "light" || stored === "dark") {
+    if (stored === 'light' || stored === 'dark') {
       return stored;
     }
   } catch {
     /* ignore unavailable storage */
   }
-  return "light";
+  return 'light';
 }
 
 export function persistTheme(theme: PopupTheme): void {

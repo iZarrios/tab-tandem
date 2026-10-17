@@ -1,14 +1,31 @@
 {
-  "name": "tab-swapper",
+  "name": "tab-tandem",
   "version": "1.0.0",
   "description": "Swap between the two last active tabs in the current window.",
-  "devDependencies": {
-    "@types/chrome": "^0.0.268",
-    "esbuild": "^0.25.0",
-    "typescript": "^5.0.0"
-  },
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.18.3",
   "scripts": {
-    "build": "tsc --noEmit && node scripts/build.mjs",
-    "typecheck": "tsc --noEmit"
+    "postinstall": "wxt prepare",
+    "dev": "wxt",
+    "build": "wxt build",
+    "build:dev": "wxt build --mode development",
+    "zip": "wxt zip",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "test": "pnpm test:unit",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "check": "pnpm typecheck && pnpm lint && pnpm test:unit && pnpm zip"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.6",
+    "@types/chrome": "^0.1.31",
+    "@types/node": "^24.9.1",
+    "jsdom": "^27.0.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.3",
+    "wxt": "^0.21.4"
   }
 }

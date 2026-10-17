@@ -1,4 +1,4 @@
-export const STORAGE_KEY = "shortcutSettings";
+export const STORAGE_KEY = 'shortcutSettings';
 
 export interface ShortcutBinding {
   code: string;
@@ -10,53 +10,59 @@ export interface ShortcutSettings {
   bindings: ShortcutBinding[];
 }
 
+export const DEFAULT_BINDING: ShortcutBinding = {
+  code: 'Backquote',
+  altKey: false,
+  shiftKey: false,
+};
+
 export const DEFAULT_SETTINGS: ShortcutSettings = {
-  bindings: [{ code: "Backquote", altKey: false, shiftKey: false }],
+  bindings: [DEFAULT_BINDING],
 };
 
 const KEY_LABELS: Record<string, string> = {
-  Backquote: "`",
-  Escape: "Esc",
-  Period: ".",
-  Comma: ",",
-  Space: "Space",
-  Minus: "-",
-  Equal: "=",
-  BracketLeft: "[",
-  BracketRight: "]",
-  Backslash: "\\",
-  Semicolon: ";",
+  Backquote: '`',
+  Escape: 'Esc',
+  Period: '.',
+  Comma: ',',
+  Space: 'Space',
+  Minus: '-',
+  Equal: '=',
+  BracketLeft: '[',
+  BracketRight: ']',
+  Backslash: '\\',
+  Semicolon: ';',
   Quote: "'",
-  Slash: "/",
+  Slash: '/',
 };
 
 export function labelKeyCode(code: string): string {
   if (KEY_LABELS[code]) {
     return KEY_LABELS[code];
   }
-  if (code.startsWith("Key")) {
+  if (code.startsWith('Key')) {
     return code.slice(3);
   }
-  if (code.startsWith("Digit")) {
+  if (code.startsWith('Digit')) {
     return code.slice(5);
   }
   return code;
 }
 
 export function formatBinding(binding: ShortcutBinding): string {
-  const isMac = navigator.platform.toLowerCase().includes("mac");
+  const isMac = navigator.platform.toLowerCase().includes('mac');
   const parts: string[] = [];
 
-  parts.push(isMac ? "⌘" : "Ctrl");
+  parts.push(isMac ? '⌘' : 'Ctrl');
   if (binding.altKey) {
-    parts.push(isMac ? "⌥" : "Alt");
+    parts.push(isMac ? '⌥' : 'Alt');
   }
   if (binding.shiftKey) {
-    parts.push(isMac ? "⇧" : "Shift");
+    parts.push(isMac ? '⇧' : 'Shift');
   }
   parts.push(labelKeyCode(binding.code));
 
-  return isMac ? parts.join("") : parts.join("+");
+  return isMac ? parts.join('') : parts.join('+');
 }
 
 export function matchesBinding(
@@ -76,7 +82,12 @@ export function matchesBinding(
 }
 
 export function bindingFromEvent(event: KeyboardEvent): ShortcutBinding | null {
-  if (event.key === "Control" || event.key === "Meta" || event.key === "Shift" || event.key === "Alt") {
+  if (
+    event.key === 'Control' ||
+    event.key === 'Meta' ||
+    event.key === 'Shift' ||
+    event.key === 'Alt'
+  ) {
     return null;
   }
   if (!(event.ctrlKey || event.metaKey)) {
@@ -95,7 +106,7 @@ export async function getShortcutSettings(): Promise<ShortcutSettings> {
   const stored = result[STORAGE_KEY];
   if (
     stored === undefined ||
-    typeof stored !== "object" ||
+    typeof stored !== 'object' ||
     stored === null ||
     !Array.isArray((stored as ShortcutSettings).bindings)
   ) {

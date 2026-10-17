@@ -12,14 +12,16 @@
   A Chromium-based extension that toggles between the two most recently visited tabs.
 </p>
 
-## Install (load unpacked)
+## Install
 
-1. `npm install`
-2. `npm run build` (outputs `dist/background.js`)
-3. Open `chrome://extensions`
-4. Enable **Developer mode** (top-right)
-5. Click **Load unpacked** and select this project folder (the one containing
-   `manifest.json`).
+Download `tab-tandem-<version>-chrome.zip` from the latest
+[GitHub release](https://github.com/iZarrios/tab-tandem/releases) and unzip it,
+or build it yourself (see [Development](#development)). Then:
+
+1. Open `chrome://extensions`
+2. Enable **Developer mode** (top-right)
+3. Click **Load unpacked** and select the unzipped folder (or
+   `.output/chrome-mv3` when building locally).
 
 ## Usage
 
@@ -63,7 +65,7 @@ Chrome's extension shortcuts page for the fallback command.
 
 ## How it works
 
-- Background service worker (`src/background.ts`) tracks the current and previous
+- Background service worker (`src/entrypoints/background.ts`) tracks the current and previous
   tab id for each window in `chrome.storage.session` (survives worker
   suspension).
 - `chrome.tabs.onActivated` keeps the per-window history up to date.
@@ -71,9 +73,35 @@ Chrome's extension shortcuts page for the fallback command.
   still exists.
 - `chrome.windows.onRemoved` garbage-collects stored history for closed windows.
 
-## Build
+## Development
+
+Requirements: Node.js 24+, Corepack, and a Chromium-based browser.
 
 ```bash
-npm install
-npm run build
+corepack enable
+pnpm install
+pnpm dev
 ```
+
+Load `.output/chrome-mv3-dev` when running `pnpm dev`, and keep that process
+running so WXT rebuilds it as files change.
+
+Build and package:
+
+```bash
+pnpm build   # .output/chrome-mv3
+pnpm zip     # .output/tab-tandem-<version>-chrome.zip
+```
+
+## Testing
+
+```bash
+pnpm check
+```
+
+`pnpm check` runs type checking, linting, unit tests, and creates the production
+extension ZIP.
+
+GitHub Actions attaches the ZIP as a downloadable artifact after every
+successful CI run. To publish a GitHub Release with that ZIP, bump `version` in
+`package.json` and push a matching tag such as `v1.0.0`.
