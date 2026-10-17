@@ -55,14 +55,6 @@ Chrome's extension shortcuts page for the fallback command.
 - It requires host permission for `<all_urls>` so the script can run on every
   page.
 
-## Remap shortcuts
-
-- **Page shortcut** (`Ctrl`/`Cmd` + key): click the TabTandem toolbar icon and
-  press **Shortcut** to record a new binding.
-- **Fallback command** (`Ctrl+.` by default): click **Change in Chrome…** in the
-  popup, or open `chrome://extensions/shortcuts` manually and find
-  **TabTandem** → **Swap to the previously active tab in the current window**.
-
 ## How it works
 
 - Background service worker (`src/entrypoints/background.ts`) tracks the current and previous
@@ -101,7 +93,3 @@ pnpm check
 
 `pnpm check` runs type checking, linting, unit tests, and creates the production
 extension ZIP.
-
-GitHub Actions attaches the ZIP as a downloadable artifact after every
-successful CI run. To publish a GitHub Release with that ZIP, bump `version` in
-`package.json` and push a matching tag such as `v1.0.0`.
