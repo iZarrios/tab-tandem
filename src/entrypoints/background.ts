@@ -83,6 +83,22 @@ async function swapToPrevious(windowId: number): Promise<void> {
   }, SWAP_GUARD_MS);
 }
 
+async function recordActiveTab(tabId: number, windowId: number): Promise<void> {
+  const history = await getHistory(windowId);
+  if (history === null) {
+    await setHistory(windowId, { current: tabId, previous: null });
+    return;
+  }
+
+  if (history.current === tabId) {
+    return;
+  }
+
+  history.previous = history.current;
+  history.current = tabId;
+  await setHistory(windowId, history);
+}
+
 export default defineBackground(() => {
   chrome.tabs.onActivated.addListener(async (activeInfo) => {
     const { tabId, windowId } = activeInfo;
@@ -103,19 +119,16 @@ export default defineBackground(() => {
       return;
     }
 
-    const history = await getHistory(windowId);
-    if (history === null) {
-      await setHistory(windowId, { current: tabId, previous: null });
+    await recordActiveTab(tabId, windowId);
+  });
+
+  // A new tab starts on an internal page and is skipped on activation; record
+  // it once it navigates to a real URL, since onActivated won't fire again.
+  chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+    if (changeInfo.url === undefined || !tab.active || isInternalTab(tab)) {
       return;
     }
-
-    if (history.current === tabId) {
-      return;
-    }
-
-    history.previous = history.current;
-    history.current = tabId;
-    await setHistory(windowId, history);
+    await recordActiveTab(tabId, tab.windowId);
   });
 
   chrome.commands.onCommand.addListener(async (command) => {
