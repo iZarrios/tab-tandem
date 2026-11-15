@@ -12,6 +12,12 @@
   A Chromium-based extension that toggles between the two most recently visited tabs.
 </p>
 
+<p align="center">
+  <img src="docs/demo.gif" alt="TabTandem demo: clicking two tabs, then pressing Ctrl+. repeatedly swaps between them" width="800">
+  <br>
+  <sub>Click any two tabs, then press <kbd>Ctrl</kbd> + <kbd>.</kbd> to flip between them.</sub>
+</p>
+
 ## Install
 
 Download `tab-tandem-<version>-chrome.zip` from the latest
@@ -39,6 +45,17 @@ handled gracefully.
 
 Click the TabTandem toolbar icon to change the page shortcuts or open
 Chrome's extension shortcuts page for the fallback command.
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/popup-light.png" alt="TabTandem settings popup in light theme" width="400"></td>
+    <td align="center"><img src="docs/popup-dark.png" alt="TabTandem settings popup in dark theme" width="400"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Light theme</sub></td>
+    <td align="center"><sub>Dark theme</sub></td>
+  </tr>
+</table>
 
 > Chrome's `commands` API does **not** support the backtick (`` ` ``) key
 > (only letters, digits, `Comma`, `Period`, `Space`, arrows,
